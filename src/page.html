@@ -1,0 +1,37 @@
+<!doctype html>
+<!-- 待确认：专用域名和隐私政策；风险：原样回显认证头、Cookie、查询字符串需隔离域名，自动 STUN 不构成匿名性保证。 -->
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="连接出口、Cloudflare 边缘元数据、浏览器指纹、WebRTC 与 DNS 可观测性自检">
+  <title>Connection Exposure Audit · 连接暴露审计</title>
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="topline"><span class="brand">EXPOSURE <b>/</b> AUDIT</span><button id="language" type="button" class="secondary">EN</button></div>
+      <div class="eyebrow">NETWORK FORENSICS · CLIENT PRIVACY</div>
+      <h1 data-i18n="title">你的连接向网站暴露了什么？</h1>
+      <p data-i18n="intro">自动检查本次 HTTPS 请求、Cloudflare 边缘可见信息，以及浏览器无需弹窗即可读取的特征。每一项都标注来源和验证边界。</p>
+      <div class="protocol"><span class="dot"></span><span data-i18n="automatic">打开页面后自动检测，无需点击启动</span></div>
+    </header>
+    <section class="metrics" id="metrics" aria-live="polite"><div class="metric pending" data-i18n="loading">正在自动检测…</div></section>
+    <nav class="toolbar" aria-label="Report actions">
+      <button id="rerun" type="button" data-i18n="rerun">重新运行检测</button>
+      <button id="download" type="button" class="secondary" data-i18n="download">导出完整 JSON</button>
+      <button id="copy" type="button" class="secondary" data-i18n="copy">复制 JSON</button>
+      <span class="small" data-i18n="memoryOnly">仅在本次页面内存中保留客户端检测数据</span>
+    </nav>
+    <section class="panel" id="risksPanel"><div class="heading"><h2 data-i18n="riskTitle">隐私暴露评估</h2><span class="hint" data-i18n="riskHint">只报告证据，不虚构唯一性百分比</span></div><div id="risks" class="risk-grid"></div></section>
+    <section class="panel"><div class="heading"><h2 data-i18n="serverTitle">01 · 服务端实际收到</h2><span class="tag">EDGE / RECEIVED</span></div><p data-i18n="serverHelp">来自初始 HTML 导航请求。请求头可能包含 Cloudflare 新增或改写的字段，不全是浏览器原始发送内容。</p><div id="server" class="groups"></div></section>
+    <section class="panel"><div class="heading"><h2 data-i18n="browserTitle">02 · 浏览器本地可读取</h2><span class="tag">JS / LOCAL</span></div><p data-i18n="browserHelp">脚本自动读取并只在本页显示。可被读取不代表这些值已随 HTTP 请求自动上传。</p><div id="browser" class="groups"></div></section>
+    <section class="panel"><div class="heading"><h2 data-i18n="probeTitle">03 · 主动网络探针</h2><span class="tag">NETWORK / ACTIVE</span></div><p data-i18n="probeHelp">WebRTC 自动联系 Cloudflare 公共 STUN 服务。IPv4/IPv6 和 DNS 专用探针仅在站点部署对应端点后运行。</p><div id="probes" class="groups"></div></section>
+    <section class="panel"><div class="heading"><h2 data-i18n="rawTitle">04 · 原始报告与方法</h2><span class="tag">JSON / EVIDENCE</span></div><p data-i18n="rawHelp">当次请求可见的 URL、所有请求头和 request.cf 字段均原样回显，包括可能的认证信息；导出或分享 JSON 前请检查敏感值。</p><details><summary data-i18n="rawToggle">显示完整 JSON</summary><pre id="raw"></pre></details><div class="limits"><h3 data-i18n="limitsTitle">无法凭一次访问证明</h3><p data-i18n="limitsBody">真实身份、家庭住址、VPN 背后的原始 IP、准确 DNS 解析器、完整匿名性、指纹在人群中的唯一性，以及未被浏览器开放的权限数据。</p></div></section>
+    <footer><p data-i18n="privacy">本站不主动设置 Cookie、不使用持久化数据库或第三方统计脚本；但会将访问请求中携带的全部 Cookie、认证头和查询参数原样反馈给当前页面。请只在隔离域名部署。</p><p><a href="https://developers.cloudflare.com/workers/runtime-apis/request/" target="_blank" rel="noreferrer noopener">Cloudflare Request API</a> · <a href="https://developers.cloudflare.com/realtime/turn/" target="_blank" rel="noreferrer noopener">STUN</a> · <a href="https://developers.cloudflare.com/dns/additional-options/analytics/" target="_blank" rel="noreferrer noopener">DNS logs</a></p></footer>
+  </main>
+  <script id="boot" type="application/json"><!--BOOT_DATA--></script>
+  <script defer src="/assets/client.js"></script>
+</body></html>
