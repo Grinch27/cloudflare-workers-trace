@@ -1,0 +1,12 @@
+// 待确认：本次 GitHub 提交对应的 Workers Builds 生产部署结果。
+// 歧义：workers.dev 的实测连通性取决于当前客户端的 IPv4/IPv6 网络路径。
+// 后续研究：各专用单栈探针的端到端验收。
+// 潜在优化：固定 Wrangler 版本，并在发布前校验生成产物。
+// 风险：推送 main 会触发现有 Workers Builds 的生产部署。
+// 验证重点：Wrangler 读取 worker.js，生产地址返回 HTML、JSON 和静态资源。
+{
+  "name": "cloudflare-workers-trace",
+  "main": "./worker.js",
+  "compatibility_date": "2026-11-15",
+  "workers_dev": true
+}
