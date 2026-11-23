@@ -1,12 +1,11 @@
-// 待确认：本次 GitHub 提交对应的 Workers Builds 生产部署结果。
-// 歧义：workers.dev 的实测连通性取决于当前客户端的 IPv4/IPv6 网络路径。
-// 后续研究：各专用单栈探针的端到端验收。
-// 潜在优化：固定 Wrangler 版本，并在发布前校验生成产物。
-// 风险：推送 main 会触发现有 Workers Builds 的生产部署。
-// 验证重点：Wrangler 读取 worker.js，生产地址返回 HTML、JSON 和静态资源。
+// 待确认：Cloudflare Pages 项目名称和生产域名。
+// 歧义：现有 workers.dev 地址属于原服务。
+// 后续研究：公网单栈探针和权威 DNS 实测。
+// 潜在优化：在 CI 校验发布目录的动态路由清单。
+// 风险：现有 Git main 仍关联旧的 Workers Builds。
+// 验证重点：dist 静态服务、Functions 路由与 API 缓存头。
 {
   "name": "cloudflare-workers-trace",
-  "main": "./worker.js",
-  "compatibility_date": "2026-11-15",
-  "workers_dev": true
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-11-15"
 }
